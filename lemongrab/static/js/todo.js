@@ -72,6 +72,33 @@ TODO = (function(todoCode) {
     $("#task-" + id).remove();
   };
 
+  // Save the task list to the server
+  var _saveTasks = function() {
+    var fullTaskList = {},
+        completedList = $(constants.completeList),
+        incompletedList = $(constants.incompleteList),
+        i;
+
+    console.log(completedList);
+    console.log(completedList.children().length);
+
+
+  };
+
+  // Retrieve tasks from the server
+  var _getTasks = function() {
+    console.log(window.location.pathname);
+    console.log(window.location.href);
+    $.ajax( "/api/v1/list/api-examples-list", {
+      success: function(data) {
+        console.log(data);
+      },
+      error:  function() {
+        console.log("Error");
+      }
+    });
+  };
+
   // Add a task to the To Do list
   var addTask = function() {
     var input         = $("#new-task-form :input"),
@@ -110,12 +137,24 @@ TODO = (function(todoCode) {
     _removeTask(id);
   };
 
+  // Save tasks to the server
+  var saveTasks = function(id) {
+    _saveTasks(id);
+  };
+
+  // Load tasks from the server
+  var getTasks = function(id) {
+    _getTasks(id);
+  };
+
   // Return the public API
   return {
     addTask: addTask,
     completeTask: completeTask,
     redoTask: redoTask,
-    deleteTask: deleteTask
+    deleteTask: deleteTask,
+    saveTasks: saveTasks,
+    getTasks: getTasks
   }
 
 }));
